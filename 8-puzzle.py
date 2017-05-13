@@ -6,6 +6,14 @@ import numpy
 from Queue import deque
 import Queue
 
+class TreeNode() :
+    def __init__(self, string_state, action,  parent=None):
+        self.string_state = string_state
+        self.actions = parent.actions
+        self.actions.append(action)
+        self.path_steps = parent.path_steps + 1
+
+
 def swap_cells(array_2d,from_row, from_col, to_row, to_col ):
 #    print "swaping cells from row " + str (from_row)
 #    print "swaping cells from col " + str (from_col)
@@ -133,6 +141,7 @@ board_temp_string = ''.join(initial_board)
 # print board_temp_string
 board_temp_list = list(board_temp_string)
 
+root = TreeNode(board_temp_string)
 # print board_temp_list
 
 
@@ -166,22 +175,27 @@ tmp2 =  [tmp  ,  "root",0,0, 0]
 
 fifo = deque()
 fifo.append (tmp2)
+explored.append(tmp2)
+explored_str = deque()
+explored_str.append(tmp)
 cycle = 0
 print  " "
 
 node_number = 0
 search_dept = 0
+nodes_expanded = 0
 while  fifo:
   search_dept = search_dept + 1
-  print " *************  FIFO ************ "
-  print fifo
-  print " *************  FIFO ************ "
+  # print " *************  FIFO ************ "
+  # print fifo
   # print " sono qui "
   fifo_element =  fifo.popleft()
+  nodes_expanded = nodes_expanded + 1
   # print "fifo_element"
   # print fifo_element
-
+  print fifo_element
   explored.append((fifo_element, fifo_element[2]))
+  explored_str.append(fifo_element[0])
   # print " *************  explored ************ "
   # print explored
   # print " *************  explored ************ "
@@ -190,34 +204,20 @@ while  fifo:
   # print "testing fifo_element if == goal_State "
   fifo_element_str = fifo_element[0]
   # print to_table(fifo_element_str)
-  print " "
+  # print " "
+  # print " node number = " + str(fifo_element[2])
   if len(fifo_element_str) > 0 :
       if fifo_element_str  == goal_state:
          path.append(fifo_element)
          print "GOAL REACHED !!!!!"
          break
-  #
-  #
-  #     print " fifo_element_2 " + fifo_element_2
-  #     print getsizeof(fifo_element_2)
-      child = make_move(fifo_element_str, "LEFT")
-      # print " child extracted going left " + child +  "( length = ) "  +  str(len(child))
-      if len(child)> 0:
-       if not ((child in fifo) or ( child in explored)):
-           node_number = node_number + 1
-           fifo.append([child, "LEFT",node_number, fifo_element[2],search_dept])
 
-      child = make_move(fifo_element_str, "RIGHT")
-      # print " child extracted going right " + child + "( length = ) " + str(len(child))
-      if len(child) > 0:
-       if not ((child in fifo) or (child in explored)):
-           node_number = node_number + 1
-           fifo.append([child, "RIGHT",node_number,fifo_element[2],search_dept])
 
       child = make_move(fifo_element_str, "UP")
       # print " child extracted going UP " + child + "( length = ) " + str(len(child))
       if len(child) > 0:
         if not ((child in fifo) or (child in explored)):
+            print " --> adding child UP"
             node_number = node_number + 1
             fifo.append([child, "UP",node_number,fifo_element[2],search_dept])
 
@@ -225,11 +225,31 @@ while  fifo:
       # print " child extracted going DOWN " + child + "( length = ) " + str(len(child))
       if len(child) > 0:
         if not ((child in fifo) or (child in explored)):
+           if child not in explored:
+            print " --> adding child down" + child
             node_number = node_number + 1
             fifo.append([child, "DOWN",node_number,fifo_element[2],search_dept])
 
+      child = make_move(fifo_element_str, "LEFT")
+      # print " child extracted going left " + child +  "( length = ) "  +  str(len(child))
+      if len(child) > 0:
+          if not ((child in fifo) or (child in explored)):
+              print " --> adding child left"
+              node_number = node_number + 1
+              fifo.append([child, "LEFT", node_number, fifo_element[2], search_dept])
 
-      print " "
+      child = make_move(fifo_element_str, "RIGHT")
+      # print " child extracted going right " + child + "( length = ) " + str(len(child))
+      if len(child) > 0:
+          if not ((child in fifo) or (child in explored)):
+              print " --> adding child right"
+              node_number = node_number + 1
+              fifo.append([child, "RIGHT", node_number, fifo_element[2], search_dept])
+
+      # print fifo
+      # print " *************  FIFO ************ "
+      #
+      # print " "
 
       #     print "fifo "
   #     print fifo
@@ -260,10 +280,8 @@ a = explored.pop()
 path.appendleft(a)
 parent_number_previous = a[0][3]
 
-nodes_expanded = 0
 while explored:
   a = explored.pop()
-  nodes_expanded = nodes_expanded + 1
   # so the parent number of the previous is my self
   if parent_number_previous == a[0][2]:
     path.appendleft(a)
@@ -273,7 +291,6 @@ while explored:
   # print " node_number " + str(a[0][2])
   # print " parent_number " + str(a[0][3])
 
-nodes_expanded = nodes_expanded -1
 print " "
 print " "
 print " $$$$$$$$$$$$$$$$$$ PATH %%%%%%%%%%%%%%%%%"
