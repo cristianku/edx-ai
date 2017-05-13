@@ -5,12 +5,6 @@ import functions
 class Resolver:
     def __init__(self, input_board_str):
         self.start_board_str = input_board_str
-        self.final_board_str = ""
-        self.path_steps = 0
-        self.depth = 0
-        self.actions = []
-        self.max_search_depth = 0
-        self.nodes_expanded = 0
         self.goal_state =  '012345678'
 
 
@@ -33,10 +27,11 @@ class Resolver:
             self.explored.append(self.fifo_element.string_state)
             if self.fifo_element.string_state == self.goal_state:
                 print " -- FOUND THE ELEMENT !!!!"
-                self.path_steps = self.fifo_element.path_steps
-                self.depth = self.fifo_element.depth
-                self.actions = self.fifo_element.actions
-                self.final_board_str = self.fifo_element.string_state
+                self.path_to_goal = self.fifo_element.actions
+                self.cost_of_path = self.fifo_element.path_steps
+                self.search_depth = self.fifo_element.path_steps
+                # self.max_search_depth
+
                 break
 
             self.nodes_expanded = self.nodes_expanded + 1
