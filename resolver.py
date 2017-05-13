@@ -35,9 +35,8 @@ class Resolver:
                 break
 
             self.nodes_expanded = self.nodes_expanded + 1
-
-            print " Expanding node: ... " + str(self.fifo_element.string_state) + " parent actions : " + str(
-                self.fifo_element.actions)
+            # print " Expanding node: ... " + str(self.fifo_element.string_state) + " parent actions : " + str(
+            #     self.fifo_element.actions)
             # print " Possible actions " + str(functions.get_possible_actions(self.fifo_element.string_state))
             for self.possible_action in functions.get_possible_actions(self.fifo_element.string_state):
 
@@ -49,9 +48,8 @@ class Resolver:
 
                 if self.child_node.string_state not in self.explored:
                     self.fifo.append(self.child_node)
-                    print "   child_node.string_state = " + str(self.child_node.string_state)
-                    print "   child_node.path_steps   = " + str(self.child_node.path_steps)
-                    print "   child_node.actions      = " + str(self.child_node.actions)
-                    print " "
+                    # print "   child_node.string_state = " + str(self.child_node.string_state)
+                    # print "   child_node.path_steps   = " + str(self.child_node.path_steps)
+                    # print "   child_node.actions      = " + str(self.child_node.actions)
+                    # print " "
 
-            if self.nodes_expanded > 50: break

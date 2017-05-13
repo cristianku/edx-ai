@@ -30,17 +30,17 @@ def get_possible_actions(element_string ):
 
     possible_actions = []
     if zero_position_row > 0:
-        possible_actions.append("UP")
+        possible_actions.append("Up")
 
     if zero_position_row < 2:
-        possible_actions.append("DOWN")
+        possible_actions.append("Down")
 
     if zero_position_col > 0:
-        possible_actions.append("LEFT")
+        possible_actions.append("Left")
 
 
     if zero_position_col < 2:
-        possible_actions.append("RIGHT")
+        possible_actions.append("Right")
 
     return possible_actions
 
@@ -54,19 +54,19 @@ def make_move(element_string, direction ):
    # print zero_position_row
    # print zero_position_col
 
-   if direction == "LEFT" :
+   if direction == "Left" :
       zero_position_row_new = zero_position_row
       zero_position_col_new = zero_position_col - 1
 
-   elif direction == "RIGHT" :
+   elif direction == "Right" :
       zero_position_row_new = zero_position_row
       zero_position_col_new = zero_position_col + 1
 
-   elif direction == "UP" :
+   elif direction == "Up" :
       zero_position_row_new = zero_position_row - 1
       zero_position_col_new = zero_position_col
 
-   elif direction == "DOWN" :
+   elif direction == "Down" :
       zero_position_row_new = zero_position_row + 1
       zero_position_col_new = zero_position_col
 
