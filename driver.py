@@ -20,7 +20,7 @@ board_temp_list = list(board_temp_string)
 solve_bfc = resolver.Resolver(board_temp_string)
 solve_bfc.bfs_Solve()
 
-print "   GOAL.string_state     = " + str(solve_bfc.string_state)
+print "   GOAL.final_board_str     = " + str(solve_bfc.final_board_str)
 print "   GOAL.path_steps       = " + str(solve_bfc.path_steps)
 print "   GOAL.depth            = " + str(solve_bfc.depth)
 print "   GOAL.actions          = " + str(solve_bfc.actions)

@@ -17,16 +17,16 @@ def swap_cells(array_2d,from_row, from_col, to_row, to_col ):
     return new_array
 
 def get_possible_actions(element_string ):
-    print " inside get_possible_actions " + element_string
+    # print " inside get_possible_actions " + element_string
     np_array_input = to_table(element_string)
-    print np_array_input
+    # print np_array_input
     zero_position = numpy.where(np_array_input == "0")
-    print zero_position
+    # print zero_position
     # print " zero position !!!!!!  " + str(zero_position)
     zero_position_row = int(zero_position[0])
     zero_position_col = int(zero_position[1])
-    print type(zero_position_row)
-    print zero_position_col
+    # print type(zero_position_row)
+    # print zero_position_col
 
     possible_actions = []
     if zero_position_row > 0:

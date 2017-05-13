@@ -20,7 +20,7 @@ class Resolver:
 
         #
         self.explored = deque()
-        self.explored.append(root.string_state)
+        self.explored.append(self.start_board_str)
 
         self.fifo = deque()
         self.fifo.append(root)
@@ -36,25 +36,27 @@ class Resolver:
                 self.path_steps = self.fifo_element.path_steps
                 self.depth = self.fifo_element.depth
                 self.actions = self.fifo_element.actions
-
+                self.final_board_str = self.fifo_element.string_state
+                break
 
             self.nodes_expanded = self.nodes_expanded + 1
 
             print " Expanding node: ... " + str(self.fifo_element.string_state) + " parent actions : " + str(
                 self.fifo_element.actions)
-            print " Possible actions " + str(functions.get_possible_actions(self.fifo_element.string_state))
-            for possible_action in functions.get_possible_actions(self.fifo_element.string_state):
+            # print " Possible actions " + str(functions.get_possible_actions(self.fifo_element.string_state))
+            for self.possible_action in functions.get_possible_actions(self.fifo_element.string_state):
 
-                move_str = functions.make_move(self.fifo_element.string_state, possible_action)
-                child_node = TreeNode(string_state=move_str, action=possible_action, parent=self.fifo_element)
+                self.move_str = functions.make_move(self.fifo_element.string_state, self.possible_action)
+                self.child_node = TreeNode(string_state=self.move_str, action=self.possible_action, parent=self.fifo_element)
 
-                print "   child_node.string_state = " + str(child_node.string_state)
-                print "   child_node.path_steps   = " + str(child_node.path_steps)
-                print "   child_node.actions      = " + str(child_node.actions)
-                print " "
-                if child_node.depth > max_search_depth:
-                    max_search_depth = child_node.depth
-                if (child_node.string_state not in self.explored):
-                    self,fifo.append(child_node)
+                if self.child_node.depth > self.max_search_depth:
+                    self.max_search_depth = self.child_node.depth
+
+                if self.child_node.string_state not in self.explored:
+                    self.fifo.append(self.child_node)
+                    print "   child_node.string_state = " + str(self.child_node.string_state)
+                    print "   child_node.path_steps   = " + str(self.child_node.path_steps)
+                    print "   child_node.actions      = " + str(self.child_node.actions)
+                    print " "
 
             if self.nodes_expanded > 50: break
