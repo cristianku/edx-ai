@@ -9,10 +9,8 @@ class TreeNode :
         self._zero_position = string_state.index("0")
         action_number = 0
         if parent:
-             self._actions = list(parent.actions[:])
-
-             if len(self._actions)    < 100000:
-                 self._actions.append(action)
+             self._actions = parent.actions
+             self._actions = self._actions +  action
 
              self._path_steps = parent.path_steps + 1
 
@@ -20,7 +18,7 @@ class TreeNode :
         else:
              self._string_state = string_state
              self._zero_position = string_state.index("0")
-             self._actions = [] #numpy.array([])
+             self._actions = ""
              self._path_steps = 0
 
 
@@ -44,4 +42,5 @@ class TreeNode :
     @property
     def depth(self):
         return len(self._actions)  # to account for 0 indexing
+
 

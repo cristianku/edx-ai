@@ -34,32 +34,32 @@ class Resolver:
         possible_actions = []
 
         if 3 <= zero_position <= 8:
-            possible_actions.append("Up")
+            possible_actions.append("U")
 
         if 0 <= zero_position <= 5:
-            possible_actions.append("Down")
+            possible_actions.append("D")
 
         if zero_position in [1, 2, 4, 5, 7, 8]:
-            possible_actions.append("Left")
+            possible_actions.append("L")
 
         if zero_position in [0, 1, 3, 4, 6, 7]:
-            possible_actions.append("Right")
+            possible_actions.append("R")
 
         return possible_actions
 
     @staticmethod
     def make_move_str(string_state,zero_position, direction):
         to_position = zero_position
-        if direction == "Left":
+        if direction == "L":
             to_position = zero_position - 1
 
-        elif direction == "Right":
+        elif direction == "R":
             to_position = zero_position + 1
 
-        elif direction == "Up":
+        elif direction == "U":
             to_position = zero_position - 3
 
-        elif direction == "Down":
+        elif direction == "D":
             to_position = zero_position + 3
 
         # print "zero_position_row_new " + str(zero_position_row_new)
@@ -93,7 +93,23 @@ class Resolver:
 
             if fifo_element.string_state == self.goal_state:
                 # print " -- FOUND THE ELEMENT !!!!"
-                self.path_to_goal = fifo_element.actions
+
+                self.path_to_goal = list(fifo_element.actions)
+                # print self.path_to_goal
+                for idx, item in enumerate(self.path_to_goal):
+                    if "L" in item:
+                        item = "Left"
+                        self.path_to_goal[idx] = item
+                    if "R" in item:
+                            item = "Right"
+                            self.path_to_goal[idx] = item
+                    if "U" in item:
+                        item = "Up"
+                        self.path_to_goal[idx] = item
+                    if "D" in item:
+                        item = "Down"
+                        self.path_to_goal[idx] = item
+
                 self.cost_of_path = fifo_element.path_steps
                 self.search_depth = fifo_element.path_steps
                 # self.max_search_depth
@@ -154,7 +170,23 @@ class Resolver:
 
             if fifo_element.string_state == self.goal_state:
                 # print " -- FOUND THE ELEMENT !!!!"
-                self.path_to_goal = fifo_element.actions
+
+                self.path_to_goal = list(fifo_element.actions)
+                # print self.path_to_goal
+                for idx, item in enumerate(self.path_to_goal):
+                    if "L" in item:
+                        item = "Left"
+                        self.path_to_goal[idx] = item
+                    if "R" in item:
+                        item = "Right"
+                        self.path_to_goal[idx] = item
+                    if "U" in item:
+                        item = "Up"
+                        self.path_to_goal[idx] = item
+                    if "D" in item:
+                        item = "Down"
+                        self.path_to_goal[idx] = item
+
                 self.cost_of_path = fifo_element.path_steps
                 self.search_depth = fifo_element.path_steps
                 # self.max_search_depth
