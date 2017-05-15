@@ -149,6 +149,7 @@ class Resolver:
 
         while self.fifo:
             fifo_element = self.fifo.pop()
+            # print " fifo_element " + fifo_element.string_state
             self.explored.add(fifo_element.string_state)
 
             if fifo_element.string_state == self.goal_state:
@@ -172,7 +173,7 @@ class Resolver:
             #
             #     end_time = time.time()
             #     self.total_time = self.total_time + end_time - start_time
-            for action in possible_actions_list:
+            for action in list(reversed(possible_actions_list)):
 
                 move_str = Resolver.make_move_str(fifo_element.string_state, fifo_element.zero_position, action)
                 child_node = TreeNode(string_state=move_str, action=action, parent=fifo_element)

@@ -65,7 +65,7 @@ with open('output.txt', 'w+') as f:
     f.write("nodes_expanded: "   + str(solver.nodes_expanded) +  "\n")
     f.write("search_depth: "     + str(solver.search_depth) +  "\n")
     f.write("max_search_depth: " + str(solver.max_search_depth) +  "\n")
-    f.write("running_time: "     + str(final_time -  initial_time) + "\n")
+    f.write("running_time: "     + '{:.6f}'.format(final_time -  initial_time) + "\n")
     f.write("max_ram_usage: "    + str(memory_usage_mb) )
 
 # code of interest
