@@ -39,6 +39,8 @@ if solver_type  == "BFS" :
     solver.bfs_Solve()
 elif solver_type  == "DFS" :
     solver.dfs_Solve()
+elif solver_type  == "AST" :
+    solver.a_Star_Solve()
 
 final_time = time.time()
 #
