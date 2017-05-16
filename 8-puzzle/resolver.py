@@ -1,6 +1,5 @@
 from TreeNode import TreeNode
 from Queue import deque
-import functions
 import numpy
 import time
 
@@ -229,7 +228,7 @@ class Resolver:
 
 
     def a_Star_Solve(self):
-        root = TreeNode(string_state=self.start_board_str,if_priority=True)
+        root = TreeNode(string_state=self.start_board_str,if_priority=True, counter = 1)
         # print board_temp_list
 
         #
@@ -244,8 +243,9 @@ class Resolver:
         self.max_search_depth = 0
         self.possible_actions_list = []
         self.total_time = 0
-
+        counter  = 0
         while not self.frontier.empty():
+            counter = counter + 1
             # sort quue
             fifo_element = self.frontier.get()
             # print " fifo_element " + fifo_element.string_state
@@ -291,7 +291,7 @@ class Resolver:
             for action in list(reversed(possible_actions_list)):
 
                 move_str = Resolver.make_move_str(fifo_element.string_state, fifo_element.zero_position, action)
-                child_node = TreeNode(string_state=move_str, action=action, parent=fifo_element, if_priority=True)
+                child_node = TreeNode(string_state=move_str, action=action, parent=fifo_element, if_priority=True, counter = counter)
 
                 if child_node.depth > self.max_search_depth:
                     self.max_search_depth = child_node.depth

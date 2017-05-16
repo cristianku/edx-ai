@@ -1,13 +1,9 @@
-import sys
-from numpy import reshape
-import numpy
-from Queue import deque
-from TreeNode import TreeNode
-import functions
-import resolver
-import time
 import resource
+import sys
+import time
 from sys import platform
+
+import resolver
 
 # import cProfile as profile
 
