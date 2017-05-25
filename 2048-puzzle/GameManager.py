@@ -3,7 +3,6 @@ from ComputerAI import ComputerAI
 from PlayerAI   import PlayerAI
 from Displayer  import Displayer
 from random     import randint
-import random
 import time
 
 defaultInitialTiles = 2
@@ -44,11 +43,10 @@ class GameManager:
 
     def updateAlarm(self, currTime):
         if currTime - self.prevTime > timeLimit + allowance:
-            print " Pirla hai superato il tempo massimo per la mossa !"
             self.over = True
         else:
-            while time.clock() - self.prevTime < timeLimit + allowance:
-                pass
+            # while time.clock() - self.prevTime < timeLimit + allowance:
+            #     pass
 
             self.prevTime = time.clock()
 
@@ -71,9 +69,7 @@ class GameManager:
             move = None
 
             if turn == PLAYER_TURN:
-                print "############################### "
-                print "Player's Turn:"
-                print "############################### "
+                print "Player's Turn:",
                 move = self.playerAI.getMove(gridCopy)
                 print actionDic[move]
 
@@ -114,7 +110,6 @@ class GameManager:
         return not self.grid.canMove()
 
     def getNewTileValue(self):
-        random.seed(10)
         if randint(0,99) < 100 * self.probability:
             return self.possibleNewTiles[0]
         else:
@@ -140,3 +135,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

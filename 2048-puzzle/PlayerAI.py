@@ -18,6 +18,8 @@ actionDic = {
 class PlayerAI(BaseAI):
 
   def getMove(self, grid):
+    start_clock = time.clock()
+
     moves = grid.getAvailableMoves()
     max_score = -maxsize
     max_score_move = None
@@ -46,7 +48,7 @@ class PlayerAI(BaseAI):
         print " MOVE = " + str(actionDic[move])
         print " MOVE = " + str(actionDic[move])
 
-      child_node =  Node(child_grid,  1, "MAX",move,alfa, beta)
+      child_node =  Node(child_grid,  1, "MAX",move,alfa, beta, start_clock)
       alfa = child_node.alfa
       beta = child_node.beta
       if debug:
@@ -55,12 +57,17 @@ class PlayerAI(BaseAI):
         print "   --> beta " + str(beta)
 
       if child_node.alfa > max_score:
+          # for i in child_node.grid.map:
+          #   print i
+
           if debug:
             print " ROOT : new max score " \
                   + str(child_node.get_score()) \
                   + " move = " + actionDic[move]
           max_score = child_node.alfa
           max_score_move = move
+      if time.clock() - start_clock >= 0.2:
+        break
 
     if debug:
       print " ** "
@@ -69,4 +76,5 @@ class PlayerAI(BaseAI):
       print " ** "
       print " ** "
       # exit(0)
+
     return max_score_move
