@@ -1,28 +1,40 @@
 import numpy as np
 import Helper
+from sys import maxsize
 
-def calculate(grid, maxdepth, is_it_max):
-    if maxdepth == 0:
-        return Helper.heuristic(grid)
-    if not Helper.canMove(grid):
-        return Helper.heuristic(grid)
-    if is_it_max:
-        v = -np.inf
-        [children, moving] = Helper.getAvailableChildren(grid)
-        for child in children:
-            v = max(v,calculate(child,maxdepth-1,False))
-        return v
-    else:
-        cells = [i for i, x in enumerate(grid) if x == 0]
-        children = []
-        v = np.inf
-        for c in cells:
-            gridcopy = list(grid)
-            gridcopy[c]=2
-            children.append(gridcopy)
-            gridcopy = list(grid)
-            gridcopy[c]=4
-            children.append(gridcopy)
-        for child in children:
-            v = min(v,calculate(child,maxdepth-1,True))
-        return v
+
+def minimize(grid):
+    minChild = None
+    minUtility = maxsize
+
+    for move in grid.getAvailableMoves():
+            # print ' ***** move *******  ' + actionDic[m]
+            grid_copy = grid.clone()
+            grid_copy.move(move)
+            (object, utility) = maximize(grid_copy)
+            if utility < minUtility:
+                min_child = grid_copy
+                min_utility = move
+
+    return (min_child, min_utility)
+
+def maximize(grid):
+    maxChild = None
+    maxUtility = -maxsize
+
+    for move in grid.getAvailableMoves():
+            grid_copy = grid.clone()
+            grid_copy.move(move)
+            (object, utility) = minimize(grid_copy)
+            if utility > maxUtility:
+                max_child = grid_copy
+                max_utility = move
+
+    return (max_child, max_utility)
+
+# def main():
+#
+#
+# if __name__ == '__main__':
+#     main()
+#
