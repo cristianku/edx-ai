@@ -52,7 +52,7 @@ class Node :
         #
         self.create_children ()
 
-        print self.node_type
+        self.printx( self.node_type)
 
     def create_children(self):
         if self._depth > 2:
@@ -105,7 +105,7 @@ class Node :
             i = - 1
             # CREATING THE OPPONENTS ( PUTTING 2 IN THE FREE CELLS )
             for idx, cell in enumerate(self.grid.getAvailableCells()):
-                if i < 3:
+                 if i < 1:
                     grid_copy = self._grid.clone()
                     grid_copy.setCellValue(cell, 2)
                     # print " setting cell value 2"
@@ -115,13 +115,13 @@ class Node :
                     self.printx( " --> scored : " + str(self.children[i].get_score()))
 
                     if self.children[i].node_type == "LEAF":
-                        if self.children[i].get_score() < self.alfa:
+                        if self.children[i].get_score() > self.alfa:
                             self.alfa = self.children[i].get_score()
                     else:
                         if self.children[i].beta > self.alfa:
                             self.alfa = self.children[i].beta
 
-                    if self.alfa <= self.beta:
+                    if self.alfa >= self.beta:
                         break
 
 
@@ -130,17 +130,16 @@ class Node :
             self.printx( " ******* ")
 
     def calculate_score(self):
-        score1 = 0.0
+        score_av_cells = 0.0
         score_total = 0.0
         max_tile = 0.0
-        score2 = 0.0
         score3 = 0.0
-        weight1 = 1
-        weight2 = 1.5
-        weight3 = 1.5
+        weight_av_cells = 10
+        weight_max_tile = 1000
+        weight3 = 1
 
         for i in self.grid.getAvailableCells():
-            score1 = score1 + 1
+            score_av_cells = score_av_cells + 1
 
         max_tile, max_Tile_Pos = self.getMaxTileValue()
 
@@ -160,10 +159,13 @@ class Node :
         #     score3 = .8
         #     self.printx("BINGO2 !!!!!")
 
-        score_total = (score1 / 16) * weight1 + (max_tile / 16) * weight2 + score3 * weight3
+        score_total = score_av_cells  * weight_av_cells + \
+                      max_tile  * weight_max_tile + \
+                       score3 * weight3
         # print " *** score1      " + str(score1) + " - " + str(( score1 / 16))
         # print " *** max_tile    " + str(max_tile)+ " - " + str(( max_tile / 2048))
         # print " *** score_total " + str(score_total )
+        self.printx ("  !!!!!!!!!! score total " + str(score_total))
         return score_total
 
 
@@ -206,10 +208,10 @@ class Node :
         return self._grid
 
     def printx(self,str):
-        # if debug:
-        #      bb = " " * (self.depth-1)*5
-        #      print bb + str
-        return
+         if debug:
+              bb = " " * (self.depth-1)*5
+              print bb + str
+         return
 
     def set_value(self):
         self.value = 0

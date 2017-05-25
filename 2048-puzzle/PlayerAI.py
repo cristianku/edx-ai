@@ -68,5 +68,5 @@ class PlayerAI(BaseAI):
       print " best_move = " + str(actionDic[max_score_move])
       print " ** "
       print " ** "
-      exit(0)
+      # exit(0)
     return max_score_move
