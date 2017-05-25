@@ -69,6 +69,8 @@ class PlayerAI(BaseAI):
       if time.clock() - start_clock >= 0.2:
         break
 
+    print " best_score = " + str(max_score)
+
     if debug:
       print " ** "
       print " ** "
