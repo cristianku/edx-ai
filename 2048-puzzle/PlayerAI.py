@@ -26,9 +26,13 @@ class PlayerAI(BaseAI):
       print " IN MAX -- CREATING CHILD  + number of child  -" \
       + str( len(moves))
 
-    if debug: print "   *** starting grid "
-    for i in grid.map:
-      print("           " + str(i))
+    if debug:
+      print "   *** starting grid "
+      for i in grid.map:
+        print("           " + str(i))
+
+    alfa = -maxsize
+    beta =  maxsize
 
     for move in moves:
       child_grid = grid.clone()
@@ -36,15 +40,26 @@ class PlayerAI(BaseAI):
       if debug:
         print " "
         print " MOVE = " + str(actionDic[move])
-      child_node =  Node(child_grid,  1, "MAX",move)
+        print " MOVE = " + str(actionDic[move])
+        print " MOVE = " + str(actionDic[move])
+        print " MOVE = " + str(actionDic[move])
+        print " MOVE = " + str(actionDic[move])
+        print " MOVE = " + str(actionDic[move])
+
+      child_node =  Node(child_grid,  1, "MAX",move,alfa, beta)
+      alfa = child_node.alfa
+      beta = child_node.beta
       if debug:
         print "   --> score " + str(child_node.get_score())
-      if child_node.get_score() > max_score:
+        print "   --> alfa " + str(alfa)
+        print "   --> beta " + str(beta)
+
+      if child_node.alfa > max_score:
           if debug:
             print " ROOT : new max score " \
                   + str(child_node.get_score()) \
                   + " move = " + actionDic[move]
-          max_score = child_node.get_score()
+          max_score = child_node.alfa
           max_score_move = move
 
     if debug:
