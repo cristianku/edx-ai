@@ -48,6 +48,7 @@ class PlayerAI(BaseAI):
         print " MOVE = " + str(actionDic[move])
         print " MOVE = " + str(actionDic[move])
 
+
       child_node =  Node(child_grid,  1, "MAX",move,alfa, beta, start_clock)
       alfa = child_node.alfa
       beta = child_node.beta

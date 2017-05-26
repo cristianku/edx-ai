@@ -3,6 +3,7 @@ from BaseAI import BaseAI
 import random
 
 
+
 class ComputerAI(BaseAI):
     def getMove(self, grid):
         # random.seed(9001)

@@ -15,6 +15,7 @@ actionDic = {
     3: "RIGHT"
 }
 
+
 (PLAYER_TURN, COMPUTER_TURN) = (0, 1)
 
 # Time Limit Before Losing

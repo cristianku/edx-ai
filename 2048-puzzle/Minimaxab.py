@@ -15,6 +15,7 @@ def calculate(grid, maxdepth, alpha, beta, is_it_max):
                 return v
             alpha = max(alpha,v)
         return v
+
     else:
         cells = [i for i, x in enumerate(grid) if x == 0]
         children = []

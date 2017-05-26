@@ -22,6 +22,7 @@ colorMap = {
     65536 : 101,
 }
 
+
 cTemp = "\x1b[%dm%7s\x1b[0m "
 
 class Displayer(BaseDisplayer):

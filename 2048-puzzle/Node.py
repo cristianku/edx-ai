@@ -42,6 +42,7 @@ corner2 = [[0, 1], [0, 2],
        ]
 
 
+
 class Node :
     def __init__(self, grid,  depth, node_type, action,alfa, beta, start_clock ):
         self._grid = grid

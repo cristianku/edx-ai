@@ -23,6 +23,7 @@ class Resolver:
 
         self.frontier = Queue.PriorityQueue
 
+
     @staticmethod
     def swapchar(text, fst, snd):
         ba = bytearray(text)

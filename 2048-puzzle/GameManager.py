@@ -32,6 +32,7 @@ class GameManager:
         self.displayer  = None
         self.over       = False
 
+
     def setComputerAI(self, computerAI):
         self.computerAI = computerAI
 

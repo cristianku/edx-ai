@@ -16,6 +16,7 @@ def minimize(grid):
                 min_child = grid_copy
                 min_utility = move
 
+
     return (min_child, min_utility)
 
 def maximize(grid):

@@ -15,6 +15,7 @@ class Node(object):
     def createChildren(self):
         if self.i_depth < 0:
             return
+
         for i in range(1, 3):
             v = self.i_sticksRemaining - i
             self.children.append(Node(self.i_depth - 1, -self.i_playerNum, v, self.realVal(v)))

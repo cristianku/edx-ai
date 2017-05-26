@@ -16,6 +16,7 @@ def getAvailableChildren(grid):
 def merge(cells):
     #merges the cells and sends back in order to be inserted
     if len(cells) <= 1:
+
         return cells
     i = 0
     while i < len(cells)-1:
