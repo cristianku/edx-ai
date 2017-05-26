@@ -34,6 +34,7 @@ class Displayer(BaseDisplayer):
     def display(self, grid):
         pass
 
+
     def winDisplay(self, grid):
         for i in range(grid.size):
             for j in range(grid.size):
