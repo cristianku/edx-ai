@@ -78,5 +78,7 @@ class PlayerAI(BaseAI):
       print " ** "
       print " ** "
       # exit(0)
-
-    return max_score_move
+    if max_score_move in [0,1,2,3]:
+      return max_score_move
+    else:
+      return 0

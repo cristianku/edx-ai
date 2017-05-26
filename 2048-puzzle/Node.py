@@ -19,7 +19,7 @@ actionDic = {
 }
 defaultProbability = 0.9
 
-maximum_depth = 6
+maximum_depth = 2
 
 min_child_skip_step = 2
 
@@ -85,7 +85,7 @@ class Node :
     def create_children(self):
         if self._depth > maximum_depth:
             if self.node_type == "MIN":
-                self._score = self.calculate_score()
+                self._score = self.calculate_score() /100
             else:
                 self._score = self.calculate_score()
 
@@ -100,15 +100,7 @@ class Node :
             for move in self.grid.getAvailableMoves():
                 # if i % 2 == 0:
                     grid_copy = self._grid.clone()
-
-                    move_computer = self.getMove_Computer(grid_copy)
-
-                    # # Validate Move
-                    if move_computer and grid_copy.canInsert(move_computer):
-                        grid_copy.setCellValue(move_computer, self.getNewTileValue())
-
                     grid_copy.move(move)
-
 
 
                     new_node_type = "MAX"
@@ -131,7 +123,7 @@ class Node :
                 # print "  time.clock() - self.start_clock = " + str(time.clock() - self.start_clock)
 
                     if time.clock() - self.start_clock >= 0.2:
-                        break
+                         break
 
             # self.printx(" ******* ")
             # self.printx(" fine IN CICLO DEL MIN -  self.beta" + str(self.beta))
@@ -149,9 +141,13 @@ class Node :
 
                 move_computer = self.getMove_Computer(grid_copy)
 
-                # Validate Move
+                # # Validate Move
                 if move_computer and grid_copy.canInsert(move_computer):
                     grid_copy.setCellValue(move_computer, self.getNewTileValue())
+
+                # # Validate Move
+                # if move_computer and grid_copy.canInsert(move_computer):
+                #     grid_copy.setCellValue(move_computer, self.getNewTileValue())
 
                 grid_copy.move(move)
 
@@ -203,7 +199,23 @@ class Node :
         weight_line_ordered = 100
         superbonus = 0
 
+        same_number_near = 0
+        prev_list = None
         for idx, i in enumerate(self.grid.map):
+            if i[0] == i[1] and i[1] >= 16 or \
+               i[1] == i[2] and i[2] >= 16 or \
+               i[2] == i[3] and i[3] >= 16 :
+              same_number_near = same_number_near + 1
+            if prev_list:
+
+                if  prev_list[0] == i[0] and i[0] >= 8 or \
+                    prev_list[1] == i[1] and i[1] >= 8 or \
+                    prev_list[2] == i[2] and i[2] >= 8 or \
+                    prev_list[3] == i[3] :
+
+                    same_number_near = same_number_near + 1
+            prev_list = i
+
             if self.is_sorted(i) and sum(i) > 0 and idx == 0:
                 score_line_ordered_right = 1
                 if i[0] == i[1] or \
@@ -221,12 +233,18 @@ class Node :
         # print str(list_x) + "  AVG = " + str(average)
         # print "*"
 
-        score_line_ordered = max(score_line_ordered_right, score_line_ordered_left)
+        if score_line_ordered_right > 0 and \
+           score_line_ordered_left == 0 or   \
+           score_line_ordered_right == 0 and \
+           score_line_ordered_left > 0:
+
+        	score_line_ordered = 1
 
         for i in self.grid.getAvailableCells():
             score_free_cells = score_free_cells + 1
 
         max_tile, max_Tile_Pos = self.getMaxTileValue()
+        if max_tile <= 512 : max_tile = 0
 
         if max_Tile_Pos in corner1:
              weight_corner = 2
@@ -237,9 +255,16 @@ class Node :
 
         # score_total = max_tile  * weight_corner  + score_free_cells \
         #               + score_line_ordered_right * 1
+        # if self.action == 0:
+        #     weight_action = 50
+        # elif self.action == 3:
+        #     weight_action = 100
+        # else:    weight_action = 1
 
-        score_total = max_tile * 1000 * weight_corner + score_free_cells
-
+        # score_total = max_tile * 1000 * weight_corner + score_free_cells + score_line_ordered * 300
+        score_total = max_tile *1000 + score_free_cells + same_number_near*10000*weight_corner+score_line_ordered*7000+ score_free_cells * 10000
+                      # + score_line_ordered * 100 + max_tile*weight_corner * 1000* same_number_near
+        # score_total = score_total * weight_action
         return score_total
 
 
@@ -315,3 +340,4 @@ class Node :
         cells = grid.getAvailableCells()
 
         return cells[random.randint(0, len(cells) - 1)] if cells else None
+
