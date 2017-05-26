@@ -3,5 +3,6 @@ class BaseDisplayer:
         pass
 
 
+
     def display(self, grid):
         pass
